@@ -1,0 +1,34 @@
+{
+  "replace_file_types": ["json", "js", "css", "html", "vue"],
+  "original_project": {
+    "root_path": "E:\\DataMiddle-DevelopServicePortal\\data-aggr-web",
+    "block_list": ["\\node_modules"]
+  },
+  "target_projects": [
+    {
+      "root_path": "E:\\DataMiddle-DevelopServicePortal\\data-assets-web",
+      "allow_list": [],
+      "replace_dir_list": ["\\client", "\\server"],
+      "replace_dict": {
+        "data-aggr-web": "data-assets-web"
+      },
+      "replace_file_list": [{"path": "\\server\\init.js", "replace_dict": {"500001011": "500001012"}}]
+    },{
+      "root_path": "E:\\DataMiddle-DevelopServicePortal\\data-analysis-web",
+      "allow_list": [],
+      "replace_dir_list": ["\\client", "\\server"],
+      "replace_dict": {
+        "data-aggr-web": "data-analysis-web"
+      },
+      "replace_file_list": [{"path": "\\server\\init.js", "replace_dict": {"500001011": "500001013"}}]
+    },{
+      "root_path": "E:\\DataMiddle-DevelopServicePortal\\dmiddvisual-web",
+      "allow_list": [],
+      "replace_dir_list": ["\\client", "\\server"],
+      "replace_dict": {
+        "data-aggr-web": "dmiddvisual-web"
+      },
+      "replace_file_list": [{"path": "\\server\\init.js", "replace_dict": {"appId: '500001011'": "appId: '500001014'"}}]
+    }
+  ]
+}
