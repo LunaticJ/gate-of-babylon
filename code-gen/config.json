@@ -1,0 +1,9 @@
+{
+  "api_center_host": "api-center.wingconn.cn",
+  "cookie": "_yapi_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjQ2OCwiaWF0IjoxNjM3OTEyNTE2LCJleHAiOjE2Mzg1MTczMTZ9.tJ-Z5yT7PznXR8UekQuUPtWrg6fnNcIkOjbmm-lJbu8; _yapi_uid=468",
+  "cat_id": "4434",
+  "package": "com.wingconn.biz.mgt",
+  "class": "MatterVisualization",
+  "class_desc": "事项、事项实例可视化",
+  "root_path": "/matterVisualization"
+}
