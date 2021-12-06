@@ -1,9 +1,13 @@
 {
   "api_center_host": "api-center.wingconn.cn",
-  "cookie": "_yapi_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjQ2OCwiaWF0IjoxNjM3OTEyNTE2LCJleHAiOjE2Mzg1MTczMTZ9.tJ-Z5yT7PznXR8UekQuUPtWrg6fnNcIkOjbmm-lJbu8; _yapi_uid=468",
-  "cat_id": "4434",
+  "api_center_cookie": "_yapi_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjQ2OCwiaWF0IjoxNjM4NzU5MTAwLCJleHAiOjE2MzkzNjM5MDB9.iz-EL59IJn6GzVzRJPibeDQ3qjIE2RnA0LKziQEk3Xc; _yapi_uid=468",
+  "visualization_host": "bop.ztfw.dev.wingconn.com",
+  "visualization_cookie": "cna=3OcGGL3gAm4CAXVS24IcMPuH; opsSessionMapId=eyJ1c2VySWQiOjEsImZ1bGxOYW1lIjoiIiwidXNlcm5hbWUiOiJhZG1pbiIsImV4cGlyeV9pbiI6MTYzODUxODM2MDc3Mn0=.NjVhMWVmNTIzMDlmZDZmMWU2ZTk4OWVjODY0MTc1Nzg5M2FiMTQyMjcwMmUxYTkxOWUzZGYwZjE0ZGU4NjU0NA==",
+  "cat_id": "4448",
   "package": "com.wingconn.biz.mgt",
-  "class": "MatterVisualization",
-  "class_desc": "事项、事项实例可视化",
-  "root_path": "/matterVisualization"
+  "class": "CoMsgVisualization",
+  "class_desc": "协作消息可视化",
+  "root_path": "/coMsgVisualization",
+  "test_host": "localhost:8871",
+  "api_host": "bizco-mgt-service:8871"
 }
