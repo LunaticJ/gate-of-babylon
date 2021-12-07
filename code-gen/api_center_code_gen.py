@@ -22,7 +22,8 @@ service_query_param = 'String {name}'
 
 controller_methods = []
 service_methods = []
-rest_client_methods = []
+local_host_rest_client_methods = []
+actual_host_rest_client_methods = []
 api_infos = []
 
 
@@ -102,24 +103,39 @@ def method_convert(api_info, config):
                                                     method_desc=method_desc,
                                                     input_desc=''.join(method_input_desc_arr),
                                                     service_input=', '.join(service_query_params))
-    rest_client_method_url = rest_client_method_template.format(method_name=method_name, method_desc=method_desc,
-                                                            method_type=method_type.upper(),
-                                                            test_host=config.get('test_host'), root_path=root_path,
-                                                            path=path)
-    api_info_url = 'http://' + config.get('api_host') + root_path + path
+    local_host_rest_client_method_url = rest_client_method_template.format(method_name=method_name,
+                                                                           method_desc=method_desc,
+                                                                           method_type=method_type.upper(),
+                                                                           test_host=config.get('local_host'),
+                                                                           root_path=root_path,
+                                                                           path=path)
+    actual_host_rest_client_method_url = rest_client_method_template.format(method_name=method_name,
+                                                                            method_desc=method_desc,
+                                                                            method_type=method_type.upper(),
+                                                                            test_host=config.get('actual_host'),
+                                                                            root_path=root_path,
+                                                                            path=path)
+
     rest_client_method_query_params = '&'.join(rest_client_query_params)
-    if len(rest_client_method_query_params) is 0:
-        rest_client_method = rest_client_method_url
-    else:
-        rest_client_method = '?'.join([rest_client_method_url, rest_client_method_query_params])
-        api_info_url = '?'.join([api_info_url, rest_client_method_query_params])
+
+    if len(rest_client_method_query_params) > 0:
+        local_host_rest_client_method_url = '?'.join(
+            [local_host_rest_client_method_url, rest_client_method_query_params])
+        actual_host_rest_client_method_url = '?'.join(
+            [actual_host_rest_client_method_url, rest_client_method_query_params])
+
     controller_methods.append(controller_method)
     service_methods.append(service_method)
-    rest_client_methods.append(rest_client_method)
-    api_infos.append({
-        'api_name': method_desc,
-        'api_url': api_info_url,
-    })
+    local_host_rest_client_methods.append(local_host_rest_client_method_url)
+    actual_host_rest_client_methods.append(actual_host_rest_client_method_url)
+    if config.get('visualization', False):
+        api_info_url = 'http://' + config.get('actual_host') + root_path + path
+        if len(rest_client_method_query_params) > 0:
+            api_info_url = '?'.join([api_info_url, rest_client_method_query_params])
+        api_infos.append({
+            'api_name': method_desc,
+            'api_url': api_info_url,
+        })
 
 
 if __name__ == '__main__':
@@ -145,23 +161,30 @@ if __name__ == '__main__':
         root_path = config.get('root_path')
         date = time.strftime('%Y/%m/%d', time.localtime())
         controller_temp = open('template/controller.txt').read()
-        service_temp = open('template/service.txt').read()
         controller_str = controller_temp.format(package=package, class_name=class_name, class_desc=class_desc,
                                                 root_path=root_path, date=date,
                                                 method_arr='\n'.join(controller_methods))
-        service_str = service_temp.format(package=package, class_name=class_name, class_desc=class_desc, date=date,
-                                          method_arr='\n'.join(service_methods))
-
-        rest_client_str = '\n'.join(rest_client_methods)
         with open('output\\' + class_name + 'Controller.java', 'w', encoding='utf-8') as cf:
             cf.write(controller_str)
             cf.close()
+    if len(service_methods) > 0:
+        service_temp = open('template/service.txt').read()
+        service_str = service_temp.format(package=package, class_name=class_name, class_desc=class_desc, date=date,
+                                          method_arr='\n'.join(service_methods))
         with open('output\\' + class_name + 'Service.java', 'w', encoding='utf-8') as sf:
             sf.write(service_str)
             sf.close()
-        with open('output\\' + class_name + '.rest', 'w', encoding='utf-8') as rf:
-            rf.write(rest_client_str)
+    if len(local_host_rest_client_methods) > 0:
+        local_host_rest_client_str = '\n'.join(local_host_rest_client_methods)
+        with open('output\\Local' + class_name + '.rest', 'w', encoding='utf-8') as rf:
+            rf.write(local_host_rest_client_str)
             rf.close()
+    if len(actual_host_rest_client_methods) > 0:
+        actual_host_rest_client_str = '\n'.join(actual_host_rest_client_methods)
+        with open('output\\Actual' + class_name + '.rest', 'w', encoding='utf-8') as rf:
+            rf.write(actual_host_rest_client_str)
+            rf.close()
+    if config.get('visualization', False) and len(api_infos) > 0:
         with open('output\\visualization_apis.json', 'w', encoding='utf-8') as af:
             af.write(json.dumps(api_infos, ensure_ascii=False, indent=2))
             af.close()
